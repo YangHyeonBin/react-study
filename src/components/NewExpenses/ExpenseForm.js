@@ -95,6 +95,7 @@ const ExpenseForm = (props) => { // 부모 컴포넌트인 NewExpense에서 Expe
         </div>
       </div>
       <div className="new-expense__actions">
+        <button type="button">Cancel</button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
