@@ -9,6 +9,9 @@ import './NewExpense.css'
 // function 키워드로도, 화살표 함수와 변수 선언하는 키워드로도 컴포넌트 생성 가능
 const NewExpense = (props) => {
   // 부모 컴포넌트인 App에서 정의한 속성 가져와 속성 값인 함수 실행하기 위해 props 받음
+
+  const [isEditing, setIsEditing] = useState(false)
+
   const saveExpenseDataHandler = (enteredExpenseData) => {
     // user가 새로운 expenseData를 저장했을 때(라는 자체 이벤트 prop을 아래에 만들었음) 실행할 함수 // 매개변수로 자식 컴포넌트(ExpenseForm)의 데이터(=submitHandler에서 생성한 expenseData 객체)를 받음
     const expenseData = {
@@ -17,32 +20,31 @@ const NewExpense = (props) => {
       id: Math.random().toString(), // 데이터 식별 위해 id 부여
     }
 
-    props.onAddExpense(expenseData)
+    props.onAddExpense(expenseData);
+
+    setIsEditing(false);
   }
 
-  const [buttonClicked, setButtonClick] = useState('')
-
-  const buttonClickHandler = (e) => {
-    setButtonClick(e.target.textContent)
+  const startEditingHandler = () => {
+    setIsEditing(true);
   }
 
-  let buttonClickController = (
-    <div className="new-expense">
-      <button onClick={buttonClickHandler}>Add New Expense</button>
-    </div>
-  )
-
-  if (buttonClicked) {
-    buttonClickController = (
-      <div className="new-expense">
-        <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} />
-      </div>
-    )
+  const stopEiditingHandler = () => {
+    setIsEditing(false);
   }
 
   return (
     <div>
-      {buttonClickController}
+      {!isEditing && (
+        <div className="new-expense">
+          <button onClick={startEditingHandler}>Add New Expense</button>
+        </div>
+      )}
+      {isEditing && (
+        <div className="new-expense">
+          <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} onCancelEiditing={stopEiditingHandler} />
+        </div>
+      )}
     </div>
   )
 }
