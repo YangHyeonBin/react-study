@@ -42,7 +42,7 @@ const ExpenseForm = (props) => { // 부모 컴포넌트인 NewExpense에서 Expe
     const expenseData = {
       // user input 담은 객체
       title: enteredTitle, // enteredTitle이라는 state를 저장
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate), // 문자열인 enteredDate를 날짜 객체로 변환해 저장
     }
 
